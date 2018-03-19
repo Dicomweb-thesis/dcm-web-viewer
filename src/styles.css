@@ -1,0 +1,43 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #151a1f;
+}
+
+[_nghost-c3] tr.ng2-smart-row.selected[_ngcontent-c3] {
+  background: #2c363f;
+}
+
+[_nghost-c3] tr.ng2-smart-row:hover[_ngcontent-c3] {
+  background: #2c363f;
+}
+
+.form-control {
+  background-color: #2c363f;
+  border: none;
+}
+
+[_nghost-c2] tr.ng2-smart-titles[_ngcontent-c2] {
+  background: #2c363f;
+  border: none;
+}
+
+.table thead th {
+  border: none;
+  background-color: #222a32;
+}
+
+.table td, .table th {
+  border-top: 0.2px solid #1d2124;
+}
+
+.page-item.disabled .page-link {
+  background-color: inherit;
+}
+
+.page-link {
+  background-color: inherit;
+}
