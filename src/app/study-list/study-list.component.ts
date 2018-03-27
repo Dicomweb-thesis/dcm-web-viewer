@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Ng2SmartTableModule, LocalDataSource} from 'ng2-smart-table';
-import {SmartTableService} from '../@core/data/smart-table.service';
-import {StudyViewModel} from '../../models/study-view-model';
-import {StudyListService} from './study-list.service';
+// import {SmartTableService} from '../core/data/smart-table.service';
+import {StudyViewModel} from './shared/study.model';
+import {StudyListService} from './shared/study-list.service';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {PatientListComponent} from '../patient-list/patient-list.component';
 

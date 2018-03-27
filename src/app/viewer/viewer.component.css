@@ -1,0 +1,57 @@
+.navbar{
+  height: 40px;
+}
+.col-sm-2.sidebar{
+  background-color: lavender;
+  overflow-y: scroll;
+  height:85vh;
+}
+.col-sm-10.main-content{
+  background-color: orange;
+  height: 85vh;
+  display: block;
+}
+
+.viewer-header{
+  height: 30px  ;
+}
+
+.content-item{
+  height: 85vh;
+}
+
+.img-wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*==================================================*/
+#dicomWrapper {
+  width: 100%;
+  height: 85vh;
+  position: relative;
+  display: inline-block;
+  background: #000;
+  border: 2px solid #1E9DCB;
+}
+#dicomImage {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.headers {
+  padding: 0;
+  margin: 5px;
+  font-weight: bold;
+  position: absolute ;
+  color: #91B9CD!important;
+}
+
+
+
+
+

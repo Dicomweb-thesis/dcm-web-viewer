@@ -1,0 +1,17 @@
+[{
+    "patientName": "ANONYMIZE",
+    "mrn": "000087",
+    "accession": "000098",
+    "studyDate": "2/7/1898",
+    "modality": "CT",
+    "studyDescription": "brain",
+  },
+  {
+     "patientName": "Bellona",
+     "mrn": "002087",
+     "accession": "006098",
+     "studyDate": "4/5/1998",
+     "modality": "MR",
+     "studyDescription": "brain",
+  }
+]

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Ng2SmartTableModule, LocalDataSource} from 'ng2-smart-table';
-import {SmartTableService} from '../@core/data/smart-table.service';
+// import {SmartTableService} from '../core/data/smart-table.service';
 import {until} from 'selenium-webdriver';
 import elementIsSelected = until.elementIsSelected;
 import {Observable} from 'rxjs/Observable';
-import {PatientViewModel} from '../../models/patient-view-model';
-import {PatientListService} from './patient-list.service';
+import {PatientViewModel} from './shared/patient.model';
+import {PatientListService} from './shared/patient-list.service';
 import {Http, Response} from '@angular/http';
 import {tryCatch} from 'rxjs/util/tryCatch';
 import {catchError} from 'rxjs/operators';
