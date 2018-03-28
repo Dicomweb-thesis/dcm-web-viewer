@@ -5,7 +5,7 @@ import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {AppComponent} from './app.component';
 import {PatientListComponent} from './patient-list/patient-list.component';
 import {StudyListComponent} from './study-list/study-list.component';
-import {CornerstoneDirective} from './directives/cornerstone.directive';
+import {CornerstoneDirective} from './viewer/cornerstone.directive';
 
 //
 import {CommonModule} from '@angular/common';
@@ -44,5 +44,3 @@ const routesConfig: Routes = [
 })
 export class AppModule {
 }
-
-

@@ -31,4 +31,8 @@ export class CornerstoneService {
     console.log(`fetching ${url}`);
     return Observable.fromPromise(cornerstone.loadAndCacheImage(`wadouri:${url}`)).first();
   }
+  fetchFromNodejs(url: string): Observable<any> {
+    console.log(`fetching ${url}`);
+    return Observable.fromPromise(cornerstone.loadAndCacheImage(`wadouri:${url}`)).first();
+  }
 }
