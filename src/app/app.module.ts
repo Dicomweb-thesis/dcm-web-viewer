@@ -12,13 +12,14 @@ import {CommonModule} from '@angular/common';
 import {Routes, RouterModule} from '@angular/router';
 import {ViewerComponent} from './viewer/viewer.component';
 import { SeriesListComponent } from './viewer/series-list/series-list.component';
+import { LoginComponent } from './login/login.component';
 //
 const routesConfig: Routes = [
-  {path: '', component: PatientListComponent},
+  { path: '', component: LoginComponent},
   {path: 'patients', component: PatientListComponent},
   {path: 'patients/:id/studies', component: StudyListComponent},
   {path: 'viewer', component: ViewerComponent}
-
+  
 ];
 
 //
@@ -29,7 +30,8 @@ const routesConfig: Routes = [
     StudyListComponent,
     ViewerComponent,
     SeriesListComponent,
-    CornerstoneDirective
+    CornerstoneDirective,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

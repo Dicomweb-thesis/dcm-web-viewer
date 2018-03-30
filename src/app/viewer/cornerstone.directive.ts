@@ -2,9 +2,9 @@ import {Directive, ElementRef, HostListener, EventEmitter, OnInit, Input, Output
 
 import Hammer from 'hammerjs';
 import * as dicomParser from 'dicom-parser';
-import * as cornerstone from 'cornerstone-core/dist/cornerstone.js';
-import * as cornerstoneMath from 'cornerstone-math/dist/cornerstoneMath.js';
-import * as cornerstoneTools from 'cornerstone-tools/dist/cornerstoneTools.js';
+import * as cornerstone from 'cornerstone-core';
+import * as cornerstoneMath from 'cornerstone-math';
+import * as cornerstoneTools from 'cornerstone-tools';
 
 cornerstoneTools.external.Hammer = Hammer;
 cornerstoneTools.external.cornerstone = cornerstone;
@@ -112,6 +112,13 @@ export class CornerstoneDirective implements OnInit {
     cornerstoneTools.zoomTouchPinch.activate(element); // - Pinch
     cornerstoneTools.panMultiTouch.activate(element); // - Multi (x2)
     cornerstoneTools.stackScrollTouchDrag.activate(element); // - Multi (x2) Drag
+  
+    cornerstoneTools.probe.enable(element);
+    cornerstoneTools.length.enable(element);
+    cornerstoneTools.ellipticalRoi.enable(element);
+    cornerstoneTools.rectangleRoi.enable(element);
+    cornerstoneTools.angle.enable(element);
+    cornerstoneTools.highlight.enable(element);
   }
 
   getImageHeaders(image) {

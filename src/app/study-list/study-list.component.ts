@@ -16,7 +16,8 @@ export class StudyListComponent implements OnInit {
   public studies: StudyViewModel[];
   errorMessage: String;
   private patientID: string;
-
+  private selectedID: string;
+  countClick = 0;
   // Setting up fields of the study table to viewing data
   settings = {
     columns: {
@@ -73,6 +74,31 @@ export class StudyListComponent implements OnInit {
       console.log(this.dataSource);
     } catch (error) {
       this.errorMessage = error;
+    }
+  }
+  /*
+  * Double click event on rows
+  * */
+  onUserRowSelect(event) {
+    this.selectedID = event.data.PatientID;
+    this.countClick++;
+    if (this.countClick === 2) {
+      let element: HTMLElement = document.getElementById('studyDetails') as HTMLElement;
+      element.click();
+    }
+    this.timeout();
+  }
+
+  /*
+  * Set timeout for click event on rows
+  * */
+  timeout() {
+    var timeout = setTimeout(() => {
+      this.countClick = 0;
+      this.timeout();
+    }, 300);
+    if (!this.countClick) {
+      clearTimeout(timeout);
     }
   }
 

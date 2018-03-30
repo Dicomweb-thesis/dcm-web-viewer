@@ -7,7 +7,6 @@ import 'rxjs/add/operator/toPromise';
 
 import {StudyViewModel} from './study.model';
 import {PatientViewModel} from '../../patient-list/shared/patient.model';
-
 @Injectable()
 export class StudyListService {
   private study: StudyViewModel;
