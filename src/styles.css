@@ -1,6 +1,10 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 body {
-  /*background-color: black;*/
-  /*color: white;*/
+  background-color: black;
+  color: white;
+  font-family: 'Roboto', 'OpenSans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -28,6 +32,10 @@ body {
 .table thead th {
   border: none;
   background-color: #222a32;
+}
+
+.table td{
+  font-size: 14px;
 }
 
 .table td, .table th {

@@ -13,3 +13,9 @@
   vertical-align: bottom;
   padding-top: 25px;
 }
+
+.btn-sm:hover{
+  background-color: rgb(76, 77, 78);
+}
+
+

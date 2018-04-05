@@ -1,79 +1,125 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="viewer-header">
-      <strong>Dicom Web Viewer</strong>
-    </div>
-  </div>
-</div>
-
-
-<!--=====================================================-->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">Link 1</a>
+      <a class="nav-link">Series</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link 2</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link 3</a>
-    </li>
+    <div class="btn-group">
+      <li class="nav-item">
+        <!-- <i class="ionicons ion-android-search"></i> -->
+        <button class="btn btn-primary" (click)="activateButton('pan')">Pan</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary" (click)="activateButton('zoom')">Zoom</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary" (click)="activateButton('level')">Level</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary" (click)="activateButton('probe')">Probe</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary" (click)="activateButton('length')">Length</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary" (click)="activateButton('ellip')">Ellip</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary" (click)="activateButton('rectangle')">Rectangle</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary" (click)="activateButton('angle')">Angle</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary" (click)="activateButton('highlight')">Highlight</button>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary" (click)="activateButton('freehand')">Freehand</button>
+      </li>
+
+      <li class="nav-item">
+        <button class="btn btn-primary" (click)="activateButton('magnify')">Magnify</button>
+      </li>
+      <li class="nav-item">
+        <div class="btn-group">
+          <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Layout</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let matrix of layoutMatrices" (click)="changeLayout(matrix)">{{matrix.name}}</a>
+          </div>
+        </div>
+      </li>
+
+    </div>
+
   </ul>
 </nav>
+
 
 <!--=====================================================-->
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-2 sidebar">
-      <div class="sidebar-item">
-
-
-      </div>
+      <app-series-list></app-series-list>
     </div>
+
     <div class="col-sm-10 main-content">
-      <div class="content-item">
-        <!--<div class="img-wrap">-->
-          <!--<img class="img-fluid" width="90%" height="auto"-->
-               <!--src="https://www.imaios.com/i/var/ezwebin_site/storage/images/media/images/e-anatomy/brain-ct/anatomy-brain-lobes-ct-en/17781488-11-eng-GB/anatomy-brain-lobes-ct-en.png">-->
-        <!--</div>-->
-<!--===============================================-->
-        <div id="dicomWrapper"
-             class='disable-selection noIbar'
-             unselectable='on'
-             onselectstart='return false;'
-             onmousedown='return false;'>
 
-          <div appCornerstone
-               [image]="imageData"
-               (headersUpdated)="updateHeaders($event)"
-               id="dicomImage"
+      <!--<mat-grid-list cols="{{selectedMatrix.colunm}}" rowHeight="fit" class="grid-list">-->
+      <!--<mat-grid-tile *ngFor="let item of itemArr">-->
+      <!--<div class="container-fluid">-->
+      <!--<app-series-viewer [btnArr]="btnArr"></app-series-viewer>-->
+      <!--</div>-->
+      <!--</mat-grid-tile>-->
+      <!--</mat-grid-list>-->
 
-               style="object-fit: cover;">
-
-            <div *ngIf='imageData'>
-              <!-- top left -->
-              <p class="headers" style="top: 0; left: 10px;">Patient Name: {{imageHeaders['patientName']}}</p>
-              <p class="headers" style="top: 25px; left: 10px;">Study Date: {{imageHeaders['studyDate']}}</p>
-              <p class="headers" style="top: 50px; left: 10px;">Age: {{imageHeaders['patientAge']}}</p>
-
-              <!-- top right -->
-              <p class="headers" style="top: 0; right: 10px;">Physician Name: {{imageHeaders['physicianName']}}</p>
-              <p class="headers" style="top: 25px; right: 10px;">Institution: {{imageHeaders['institution​Name']}}</p>
-
-              <!-- bottom left -->
-              <p class="headers" style="bottom: 20px; left: 10px;">WW/WC: {{imageData.windowWidth}} / {{imageData.windowCenter}}</p>
-              <p class="headers" style="bottom: 0; left: 10px;">Body Part: {{imageHeaders['bodyPartExamined']}}</p>
-
-              <!-- bottom right -->
-              <p class="headers" style="bottom: 0; right: 10px;">Image {{imageHeaders['currentImage']}} / {{imageHeaders['allImages']}}</p>
-            </div>
+      <!--1 x 1 default-->
+      <mat-grid-list *ngIf="layoutCurrentNo==='1 x 1'" cols="1" rowHeight="fit" class="grid-list">
+        <mat-grid-tile>
+          <div class="container-fluid">
+            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
           </div>
+        </mat-grid-tile>
+      </mat-grid-list>
 
-        </div>
-<!--===============================================================-->
+      <!--1 x 2-->
+      <mat-grid-list *ngIf="layoutCurrentNo==='1 x 2'" cols="2" rowHeight="fit" class="grid-list">
+        <mat-grid-tile>
+          <div class="container-fluid">
+            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="container-fluid">
+            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
 
-      </div>
+
+      <!--1 x 3-->
+      <mat-grid-list *ngIf="layoutCurrentNo==='1 x 3'" cols="3" rowHeight="fit" class="grid-list">
+        <mat-grid-tile>
+          <div class="container-fluid">
+            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="container-fluid">
+            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="container-fluid">
+            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <!---->
+
+
+
     </div>
+
+
   </div>
 </div>

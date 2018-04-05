@@ -1,15 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ButtonModel} from '../button.model';
+import {CornerstoneDirective} from '../../directives/cornerstone.directive';
 import {CornerstoneService} from '../../services/cornerstone.service';
+import {ButtonModel} from '../button.model';
 
 @Component({
-  selector: 'app-series-list',
-  templateUrl: './series-list.component.html',
-  styleUrls: ['./series-list.component.css'],
+  selector: 'app-series-viewer',
+  templateUrl: './series-viewer.component.html',
+  styleUrls: ['./series-viewer.component.css'],
   providers: [CornerstoneService],
 
 })
-export class SeriesListComponent implements OnInit {
+export class SeriesViewerComponent implements OnInit {
   @Input() imageStore: Array<string>;
   // panView: boolean;
 
@@ -17,9 +18,7 @@ export class SeriesListComponent implements OnInit {
   imagePath: string = window.location.origin + '/assets/dicom/';
   imageHeaders: Array<string>;
 
-  @Input() btnArr: ButtonModel[];
-
-  imageId = 'CT000000.dcm';
+  @Input() btnArr:ButtonModel[];
 
   // @Input() panView:boolean;
   // @Input() zoomView:boolean;
@@ -49,15 +48,16 @@ export class SeriesListComponent implements OnInit {
     //   .subscribe(res => this.imageData = res);
 
 
+
     /** local */
-    // if (this.imageData === undefined) {
-    //   this.imageStore = [
-    //     'CT000000.dcm', 'CT000001.dcm', 'CT000002.dcm', 'CT000003.dcm', 'CT000004.dcm', 'CT000005.dcm', 'CT000006.dcm', 'CT000007.dcm',
-    //     'CT000008.dcm', 'CT000009.dcm', 'CT000010.dcm', 'CT000011.dcm', 'CT000012.dcm', 'CT000013.dcm', 'CT000014.dcm', 'CT000015.dcm',
-    //     'CT000016.dcm', 'CT000017.dcm', 'CT000018.dcm'
-    //   ];
-    // }
-    this.getImageData(this.imageId);
+    if (this.imageData === undefined) {
+      this.imageStore = [
+        'CT000000.dcm', 'CT000001.dcm', 'CT000002.dcm', 'CT000003.dcm', 'CT000004.dcm', 'CT000005.dcm', 'CT000006.dcm', 'CT000007.dcm',
+        'CT000008.dcm', 'CT000009.dcm', 'CT000010.dcm', 'CT000011.dcm', 'CT000012.dcm', 'CT000013.dcm', 'CT000014.dcm', 'CT000015.dcm',
+        'CT000016.dcm', 'CT000017.dcm', 'CT000018.dcm'
+      ];
+    }
+    this.getImageData(this.imageStore);
 
   }
 
@@ -65,19 +65,13 @@ export class SeriesListComponent implements OnInit {
     this.imageHeaders = headerData;
   }
 
-  // getImageData(imageArray: Array<string>) {
-  //   imageArray.forEach(image => {
-  //     this.csS.fetchDicomImage(`${this.imagePath}${image}`).subscribe(res => {
-  //       this.imageData = res;
-  //       // console.log(res);
-  //     });
-  //   });
-  // }
-
-
-  getImageData(imageId){
-    this.csS.fetchDicomImage(`${this.imagePath}${imageId}`).subscribe(res=>this.imageData=res);
+  getImageData(imageArray: Array<string>) {
+    imageArray.forEach(image => {
+      this.csS.fetchDicomImage(`${this.imagePath}${image}`).subscribe(res => {
+        this.imageData = res;
+        // console.log(res);
+      });
+    });
   }
-
 
 }

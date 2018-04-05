@@ -23,7 +23,7 @@ export class PatientListComponent implements OnInit {
 
   patients: PatientViewModel[];
   errorMessage: String;
-  private selectedID: string;
+  selectedID: string;
   countClick = 0;
 
   // Setting up fields of the patient table to viewing data

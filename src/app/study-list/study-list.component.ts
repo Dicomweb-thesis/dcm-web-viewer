@@ -13,9 +13,9 @@ import {PatientListComponent} from '../patient-list/patient-list.component';
   providers: [StudyListService]
 })
 export class StudyListComponent implements OnInit {
-  public studies: StudyViewModel[];
+  studies: StudyViewModel[];
   errorMessage: String;
-  private patientID: string;
+  patientID: string;
 
   // Setting up fields of the study table to viewing data
   settings = {
