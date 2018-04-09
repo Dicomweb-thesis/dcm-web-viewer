@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CornerstoneDirective} from '../../directives/cornerstone.directive';
 import {CornerstoneService} from '../../services/cornerstone.service';
-import {ButtonModel} from '../button.model';
+import {ButtonModel} from '../../models/button.model';
+import {ViewerService} from '../shared/viewer.service';
 
 @Component({
   selector: 'app-series-viewer',
@@ -12,13 +13,15 @@ import {ButtonModel} from '../button.model';
 })
 export class SeriesViewerComponent implements OnInit {
   @Input() imageStore: Array<string>;
-  // panView: boolean;
 
   imageData: any;
-  imagePath: string = window.location.origin + '/assets/dicom/';
+  // imagePath: string = window.location.origin + '/assets/dicom/';
+  instanceApiUrl = 'http://localhost:8042/instances/';
   imageHeaders: Array<string>;
+  instance_IDs: Array<string>;
 
-  @Input() btnArr:ButtonModel[];
+  @Input() btnArr: ButtonModel[];
+  @Input() study_ID: string;
 
   // @Input() panView:boolean;
   // @Input() zoomView:boolean;
@@ -28,7 +31,7 @@ export class SeriesViewerComponent implements OnInit {
 
   // private cornerstoneDirective: CornerstoneDirective;
 
-  constructor(public csS: CornerstoneService) {
+  constructor(public csS: CornerstoneService, private viewerService: ViewerService) {
   }
 
   ngOnInit() {
@@ -44,20 +47,24 @@ export class SeriesViewerComponent implements OnInit {
     //     console.log(res);
     //   });
 
-    // this.csS.fetchDicomImage('http://localhost:8042/wado?requestType=WADO&studyUID=1.3.12.2.1107.5.2.2.9076.20051014125256000&seriesUID=1.3.12.2.1107.5.2.2.9076.20051014125635000002&objectUID=1.3.12.2.1107.5.8.1.12345.200510141312220835508&contentType=application/dicom')
+    // this.csS.fetchDicomImage('http://localhost:8042/instances/b5601171-f8b530fb-64840a05-63a39614-8ca2ac55/file')
     //   .subscribe(res => this.imageData = res);
 
 
-
     /** local */
-    if (this.imageData === undefined) {
-      this.imageStore = [
-        'CT000000.dcm', 'CT000001.dcm', 'CT000002.dcm', 'CT000003.dcm', 'CT000004.dcm', 'CT000005.dcm', 'CT000006.dcm', 'CT000007.dcm',
-        'CT000008.dcm', 'CT000009.dcm', 'CT000010.dcm', 'CT000011.dcm', 'CT000012.dcm', 'CT000013.dcm', 'CT000014.dcm', 'CT000015.dcm',
-        'CT000016.dcm', 'CT000017.dcm', 'CT000018.dcm'
-      ];
-    }
-    this.getImageData(this.imageStore);
+    // if (this.imageData === undefined) {
+    //   this.imageStore = [
+    //     'CT000000.dcm', 'CT000001.dcm', 'CT000002.dcm', 'CT000003.dcm', 'CT000004.dcm', 'CT000005.dcm', 'CT000006.dcm', 'CT000007.dcm',
+    //     'CT000008.dcm', 'CT000009.dcm', 'CT000010.dcm', 'CT000011.dcm', 'CT000012.dcm', 'CT000013.dcm', 'CT000014.dcm', 'CT000015.dcm',
+    //     'CT000016.dcm', 'CT000017.dcm', 'CT000018.dcm'
+    //   ];
+    // }
+
+    // this.getInstances_IDs(this.study_ID);
+    // console.log("test"+this.instance_IDs);
+    this.getImageData(this.study_ID);
+
+    // this.getImageData(this.imageStore);
 
   }
 
@@ -65,13 +72,19 @@ export class SeriesViewerComponent implements OnInit {
     this.imageHeaders = headerData;
   }
 
-  getImageData(imageArray: Array<string>) {
-    imageArray.forEach(image => {
-      this.csS.fetchDicomImage(`${this.imagePath}${image}`).subscribe(res => {
+  async getImageData(study_ID) {
+    let IDs = await this.getInstances_IDs(study_ID) as Array<string>;
+    for (let ID of IDs) {
+      this.csS.fetchDicomImage(`${this.instanceApiUrl}${ID}/file`).subscribe(res => {
         this.imageData = res;
-        // console.log(res);
       });
-    });
+    }
   }
+
+  async getInstances_IDs(study_ID) {
+    let series_IDs = await this.viewerService.getSeriesIDList(this.study_ID);
+    return await this.viewerService.getInstanceIDList(series_IDs[0]);
+  }
+
 
 }

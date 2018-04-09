@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {PatientListComponent} from './patient-list/patient-list.component';
@@ -11,8 +12,8 @@ import {CornerstoneDirective} from './directives/cornerstone.directive';
 import {CommonModule} from '@angular/common';
 import {Routes, RouterModule} from '@angular/router';
 import {ViewerComponent} from './viewer/viewer.component';
-import { SeriesListComponent } from './viewer/series-list/series-list.component';
-import { SeriesViewerComponent } from './viewer/series-viewer/series-viewer.component'
+import {SeriesListViewerComponent} from './viewer/series-list-viewer/series-list-viewer.component';
+import {SeriesViewerComponent} from './viewer/series-viewer/series-viewer.component';
 
 //
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -60,6 +61,8 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
+import {LoginComponent} from './users/login/login.component';
+import {SeriesListComponent} from './series-list/series-list.component';
 
 @NgModule({
   exports: [
@@ -107,15 +110,20 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-  ]
+  ],
+  declarations: [LoginComponent]
 })
-export class MaterialModule {}
+export class MaterialModule {
+}
+
 //
-const routesConfig: Routes = [
-  // {path: '', component: PatientListComponent},
+const routes: Routes = [
+  {path: '', component: PatientListComponent},
   {path: 'patients', component: PatientListComponent},
   {path: 'patients/:id/studies', component: StudyListComponent},
-  {path: 'viewer', component: ViewerComponent}
+  {path: 'patients/:patientID/studies/:studyID/series', component: SeriesListComponent},
+  {path: 'viewer/:study_ID/:series_ID', component: ViewerComponent},
+  {path: 'login', component: LoginComponent}
 
 ];
 
@@ -123,24 +131,26 @@ const routesConfig: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    CornerstoneDirective,
     PatientListComponent,
     StudyListComponent,
     ViewerComponent,
     SeriesListComponent,
-    CornerstoneDirective,
-    SeriesViewerComponent
+    SeriesViewerComponent,
+    SeriesListViewerComponent,
+
   ],
   imports: [
     BrowserModule,
     Ng2SmartTableModule,
     //
-    RouterModule.forRoot(routesConfig),
+    RouterModule.forRoot(routes),
     CommonModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
-
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

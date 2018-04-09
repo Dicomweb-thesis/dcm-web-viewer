@@ -2,7 +2,7 @@ export class StudyViewModel {
   ID: string;
   studyID: string;
   studyDate: string;
-  studyTime: string;
+  ReferringPhysicianName: string;
   accessionNumber: string;
   institutionName: string;
   numberOfSeries: number;

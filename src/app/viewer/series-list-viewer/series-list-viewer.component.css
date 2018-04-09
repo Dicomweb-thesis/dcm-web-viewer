@@ -1,0 +1,15 @@
+
+img{
+  width: 100%;
+  height: auto;
+  border-radius: 7px;
+  border:1px solid #1E9DCB ;
+}
+.item-series{
+  /*border: 1px solid white;*/
+  border-radius: 7px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+}
+

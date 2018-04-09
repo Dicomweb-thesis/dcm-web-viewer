@@ -1,6 +1,6 @@
 .content-item{
   height: 90vh;
-  padding: 0px;
+  /*padding: 0px;*/
 }
 
 .img-wrap{
@@ -16,7 +16,7 @@
   position: relative;
   display: inline-block;
   background: #000;
-  border: 2px solid #1E9DCB;
+  border: 1px solid #1E9DCB;
 }
 #dicomImage {
   display: flex;

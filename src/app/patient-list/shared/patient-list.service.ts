@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 
-import {PatientViewModel} from './patient.model';
+import {PatientViewModel} from '../../models/patient-view.model';
 
 @Injectable()
 export class PatientListService {

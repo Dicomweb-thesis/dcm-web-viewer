@@ -1,47 +1,58 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link">Series</a>
+      <a class="nav-link series" (click)="isSidebarActivated=!isSidebarActivated">Series</a>
     </li>
     <div class="btn-group">
       <li class="nav-item">
         <!-- <i class="ionicons ion-android-search"></i> -->
-        <button class="btn btn-primary" (click)="activateButton('pan')">Pan</button>
+        <button class="btn btn-primary" (click)="activateButton('pan')">
+          <i class="material-icons">pan_tool</i><br>Di chuyển</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary" (click)="activateButton('zoom')">Zoom</button>
+        <button class="btn btn-primary" (click)="activateButton('zoom')">
+          <i class="material-icons">search</i><br>Thu / phóng</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary" (click)="activateButton('level')">Level</button>
+        <button class="btn btn-primary" (click)="activateButton('level')">
+          <i class="material-icons">brightness_medium</i><br>Độ sáng</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary" (click)="activateButton('probe')">Probe</button>
+        <button class="btn btn-primary" (click)="activateButton('probe')">
+          <i class="material-icons">panorama_fish_eye</i><br>Probe</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary" (click)="activateButton('length')">Length</button>
+        <button class="btn btn-primary" (click)="activateButton('length')">
+          <i class="material-icons">straighten</i><br>Chiều dài</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary" (click)="activateButton('ellip')">Ellip</button>
+        <button class="btn btn-primary" (click)="activateButton('ellip')">
+          <i class="material-icons">data_usage</i><br>Ellip</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary" (click)="activateButton('rectangle')">Rectangle</button>
+        <button class="btn btn-primary" (click)="activateButton('rectangle')">
+          <i class="material-icons">crop_square</i><br>Hình vuông</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary" (click)="activateButton('angle')">Angle</button>
+        <button class="btn btn-primary" (click)="activateButton('angle')">
+          <i class="material-icons">share</i><br>Đo góc</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary" (click)="activateButton('highlight')">Highlight</button>
+        <button class="btn btn-primary" (click)="activateButton('freehand')">
+          <i class="material-icons">timeline</i><br>Tùy chọn</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary" (click)="activateButton('freehand')">Freehand</button>
+        <button class="btn btn-primary" (click)="activateButton('highlight')">
+          <i class="material-icons">crop_free</i><br>Nổi bật</button>
       </li>
-
       <li class="nav-item">
-        <button class="btn btn-primary" (click)="activateButton('magnify')">Magnify</button>
+        <button class="btn btn-primary" (click)="activateButton('magnify')">
+          <i class="material-icons">zoom_in</i><br>Kính</button>
       </li>
       <li class="nav-item">
         <div class="btn-group">
-          <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Layout</button>
+          <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons">apps</i><br>Bố trí</button>
           <div class="dropdown-menu">
             <a class="dropdown-item" *ngFor="let matrix of layoutMatrices" (click)="changeLayout(matrix)">{{matrix.name}}</a>
           </div>
@@ -57,65 +68,66 @@
 <!--=====================================================-->
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-2 sidebar">
-      <app-series-list></app-series-list>
+    <div class="col-sm-1">
+      <div class="sidebar">
+        <app-series-list-viewer></app-series-list-viewer>
+      </div>
     </div>
+    <div class="col-sm-11">
+      <div class="main-content">
 
-    <div class="col-sm-10 main-content">
+        <!--<mat-grid-list cols="{{selectedMatrix.colunm}}" rowHeight="fit" class="grid-list">-->
+        <!--<mat-grid-tile *ngFor="let item of itemArr">-->
+        <!--<div class="container-fluid">-->
+        <!--<app-series-viewer [btnArr]="btnArr"></app-series-viewer>-->
+        <!--</div>-->
+        <!--</mat-grid-tile>-->
+        <!--</mat-grid-list>-->
 
-      <!--<mat-grid-list cols="{{selectedMatrix.colunm}}" rowHeight="fit" class="grid-list">-->
-      <!--<mat-grid-tile *ngFor="let item of itemArr">-->
-      <!--<div class="container-fluid">-->
-      <!--<app-series-viewer [btnArr]="btnArr"></app-series-viewer>-->
-      <!--</div>-->
-      <!--</mat-grid-tile>-->
-      <!--</mat-grid-list>-->
+        <!--1 x 1 default-->
+        <mat-grid-list *ngIf="layoutCurrentNo==='1 x 1'" cols="1" rowHeight="fit" class="grid-list">
+          <mat-grid-tile>
+            <div class="item-image">
+              <app-series-viewer [btnArr]="btnArr" [study_ID]="study_ID" ></app-series-viewer>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
 
-      <!--1 x 1 default-->
-      <mat-grid-list *ngIf="layoutCurrentNo==='1 x 1'" cols="1" rowHeight="fit" class="grid-list">
-        <mat-grid-tile>
-          <div class="container-fluid">
-            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
+        <!--1 x 2-->
+        <mat-grid-list *ngIf="layoutCurrentNo==='1 x 2'" cols="2" rowHeight="fit" class="grid-list">
+          <mat-grid-tile>
+            <div class="item-image">
+              <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="item-image">
+              <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
 
-      <!--1 x 2-->
-      <mat-grid-list *ngIf="layoutCurrentNo==='1 x 2'" cols="2" rowHeight="fit" class="grid-list">
-        <mat-grid-tile>
-          <div class="container-fluid">
-            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div class="container-fluid">
-            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
+        <!--1 x 3-->
+        <mat-grid-list *ngIf="layoutCurrentNo==='1 x 3'" cols="3" rowHeight="fit" class="grid-list">
+          <mat-grid-tile>
+            <div class="item-image">
+              <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="item-image">
+              <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="item-image">
+              <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
 
-
-      <!--1 x 3-->
-      <mat-grid-list *ngIf="layoutCurrentNo==='1 x 3'" cols="3" rowHeight="fit" class="grid-list">
-        <mat-grid-tile>
-          <div class="container-fluid">
-            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div class="container-fluid">
-            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div class="container-fluid">
-            <app-series-viewer [btnArr]="btnArr"></app-series-viewer>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
-
-      <!---->
-
+        <!---->
+      </div>
 
 
     </div>

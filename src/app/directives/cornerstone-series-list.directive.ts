@@ -5,7 +5,7 @@ import * as dicomParser from 'dicom-parser';
 import * as cornerstone from 'cornerstone-core/dist/cornerstone.js';
 import * as cornerstoneMath from 'cornerstone-math/dist/cornerstoneMath.js';
 import * as cornerstoneTools from 'cornerstone-tools/dist/cornerstoneTools.js';
-import {ButtonModel} from '../viewer/button.model';
+import {ButtonModel} from '../models/button.model';
 
 cornerstoneTools.external.Hammer = Hammer;
 cornerstoneTools.external.cornerstone = cornerstone;
@@ -20,6 +20,7 @@ export class CornerstoneDirective implements OnInit {
 
   element: any;
   currentIndex = 0;
+
 
   imageList = [];
   imageListId = [];

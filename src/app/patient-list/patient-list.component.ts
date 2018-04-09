@@ -4,14 +4,14 @@ import {Ng2SmartTableModule, LocalDataSource} from 'ng2-smart-table';
 import {until} from 'selenium-webdriver';
 import elementIsSelected = until.elementIsSelected;
 import {Observable} from 'rxjs/Observable';
-import {PatientViewModel} from './shared/patient.model';
+import {PatientViewModel} from '../models/patient-view.model';
 import {PatientListService} from './shared/patient-list.service';
 import {Http, Response} from '@angular/http';
 import {tryCatch} from 'rxjs/util/tryCatch';
 import {catchError} from 'rxjs/operators';
 import {forEach} from '@angular/router/src/utils/collection';
 import {StudyListComponent} from '../study-list/study-list.component';
-
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-patient-list',
@@ -30,27 +30,27 @@ export class PatientListComponent implements OnInit {
   settings = {
     columns: {
       PatientID: {
-        title: 'Patient ID',
+        title: 'Mã bệnh nhân',
         type: 'string',
       },
       PatientName: {
-        title: 'Patient Name',
+        title: 'Tên bệnh nhân',
         type: 'string',
       },
       PatientBirthDate: {
-        title: 'Birthday',
+        title: 'Ngày sinh',
         type: 'string',
       },
       PatientSex: {
-        title: 'Sex',
+        title: 'Giới tính',
         type: 'string',
       },
       NumberOfStudies: {
-        title: 'Number of studies',
+        title: 'Số lượng nghiên cứu',
         type: 'number',
       },
       LastUpdate: {
-        title: 'Last update',
+        title: 'Cập nhật gần nhất',
         type: 'string'
       },
     }
@@ -59,7 +59,7 @@ export class PatientListComponent implements OnInit {
   // Assigning data source of the patient table
   dataSource = this.patients;
 
-  constructor(private patientListService: PatientListService) {
+  constructor(private patientListService: PatientListService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -87,8 +87,7 @@ export class PatientListComponent implements OnInit {
     this.selectedID = event.data.PatientID;
     this.countClick++;
     if (this.countClick === 2) {
-      let element: HTMLElement = document.getElementById('studyDetails') as HTMLElement;
-      element.click();
+      this.router.navigateByUrl(`/patients/${this.selectedID}/studies`);
     }
     this.timeout();
   }

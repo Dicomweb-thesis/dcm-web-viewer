@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Ng2SmartTableModule, LocalDataSource} from 'ng2-smart-table';
 // import {SmartTableService} from '../core/data/smart-table.service';
-import {StudyViewModel} from './shared/study.model';
+import {StudyViewModel} from '../models/study-view.model';
 import {StudyListService} from './shared/study-list.service';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap,Router} from '@angular/router';
 import {PatientListComponent} from '../patient-list/patient-list.component';
 
 @Component({
@@ -16,20 +16,24 @@ export class StudyListComponent implements OnInit {
   studies: StudyViewModel[];
   errorMessage: String;
   patientID: string;
+  countClick = 0;
+  selectedID: string;
+
+
 
   // Setting up fields of the study table to viewing data
   settings = {
     columns: {
       StudyID: {
-        title: 'Study ID',
+        title: 'Mã nghiên cứu',
         type: 'string',
       },
       StudyDate: {
-        title: 'Study Date',
+        title: 'Ngày',
         type: 'string',
       },
-      StudyTime: {
-        title: 'Study Time',
+      StudyDescription: {
+        title: 'Mô tả',
         type: 'string',
       },
       AccessionNumber: {
@@ -37,11 +41,11 @@ export class StudyListComponent implements OnInit {
         type: 'string',
       },
       InstitutionName: {
-        title: 'Institution Name',
+        title: 'Tên viện',
         type: 'string',
       },
       NumberOfSeries: {
-        title: 'Number of series',
+        title: 'Số lượng series',
         type: 'number'
       }
     },
@@ -50,7 +54,7 @@ export class StudyListComponent implements OnInit {
   // Assigning data source of the study table
   dataSource = this.studies;
 
-  constructor(private studyListService: StudyListService, private route: ActivatedRoute) {
+  constructor(private studyListService: StudyListService, private route: ActivatedRoute,private router:Router) {
   }
 
   ngOnInit(): void {
@@ -70,11 +74,32 @@ export class StudyListComponent implements OnInit {
     try {
       this.studies = await this.studyListService.getListViewModel(patientID);
       this.dataSource = this.studies;
-      console.log(this.dataSource);
+      // console.log(this.dataSource);
     } catch (error) {
       this.errorMessage = error;
     }
   }
 
+  onUserRowSelect(event) {
+    this.selectedID = event.data.ID;
+    this.countClick++;
+    if (this.countClick === 2) {
+      this.router.navigateByUrl(`/patients/${this.patientID}/studies/${this.selectedID}/series`);
+    }
+    this.timeout();
+  }
+
+  /*
+  * Set timeout for click event on rows
+  * */
+  timeout() {
+    var timeout = setTimeout(() => {
+      this.countClick = 0;
+      this.timeout();
+    }, 300);
+    if (!this.countClick) {
+      clearTimeout(timeout);
+    }
+  }
 
 }

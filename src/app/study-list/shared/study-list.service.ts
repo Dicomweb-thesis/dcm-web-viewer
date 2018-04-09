@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 
-import {StudyViewModel} from './study.model';
-import {PatientViewModel} from '../../patient-list/shared/patient.model';
+import {StudyViewModel} from '../../models/study-view.model';
+import {PatientViewModel} from '../../models/patient-view.model';
 
 @Injectable()
 export class StudyListService {

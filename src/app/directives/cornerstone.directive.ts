@@ -5,12 +5,11 @@ import * as dicomParser from 'dicom-parser';
 import * as cornerstone from 'cornerstone-core/dist/cornerstone.js';
 import * as cornerstoneMath from 'cornerstone-math/dist/cornerstoneMath.js';
 import * as cornerstoneTools from 'cornerstone-tools/dist/cornerstoneTools.js';
-import {ButtonModel} from '../viewer/button.model';
+import {ButtonModel} from '../models/button.model';
 
 cornerstoneTools.external.Hammer = Hammer;
 cornerstoneTools.external.cornerstone = cornerstone;
 cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
-
 
 @Directive({
   selector: '[appCornerstone]',
@@ -182,7 +181,7 @@ export class CornerstoneDirective implements OnInit {
 
 
     // touch / gesture
-    // cornerstoneTools.zoomTouchPinch.activate(element); // - Pinch                                                                                                                                                                                                                                                                  
+    // cornerstoneTools.zoomTouchPinch.activate(element); // - Pinch
     // cornerstoneTools.panMultiTouch.activate(element); // - Multi (x2)
     // cornerstoneTools.stackScrollTouchDrag.activate(element); // - Multi (x2) Drag
 
@@ -202,7 +201,6 @@ export class CornerstoneDirective implements OnInit {
     cornerstoneTools.freehand.deactivate(this.element, 1);
     cornerstoneTools.magnify.disable(this.element);
   }
-
 
   panFunc() {
     this.disableAllTools();

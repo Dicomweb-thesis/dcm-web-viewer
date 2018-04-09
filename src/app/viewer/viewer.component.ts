@@ -1,23 +1,20 @@
-import {
-  Component,
-  AfterViewInit,
-  Input,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import {Component, AfterViewInit, Input, OnInit, ViewChild} from '@angular/core';
 import {CornerstoneService} from '../services/cornerstone.service';
 import {CornerstoneDirective} from '../directives/cornerstone.directive';
-import {ButtonModel} from './button.model';
-import {MatrixModel} from './matrix.model';
+import {ButtonModel} from '../models/button.model';
+import {MatrixModel} from '../models/matrix.model';
 
 import * as cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader/dist/cornerstoneWADOImageLoader.js';
 import {from} from 'rxjs/observable/from';
+import {ViewerService} from './shared/viewer.service';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 
 
 @Component({
   selector: 'app-viewer',
   templateUrl: './viewer.component.html',
-  styleUrls: ['./viewer.component.css']
+  styleUrls: ['./viewer.component.css'],
+  providers: [ViewerService]
 })
 export class ViewerComponent implements OnInit, AfterViewInit {
   btnArr: ButtonModel[] = [
@@ -33,7 +30,6 @@ export class ViewerComponent implements OnInit, AfterViewInit {
     {name: 'freehand', value: false},
     {name: 'magnify', value: false}
   ];
-  // btnArr1 = this.btnArr;
   layoutMatrices: MatrixModel[] = [
     {name: '1 x 1', row: ['1'], colunm: ['1']},
     {name: '1 x 2', row: ['1'], colunm: ['1', '1']},
@@ -42,26 +38,34 @@ export class ViewerComponent implements OnInit, AfterViewInit {
     {name: '2 x 2', row: ['1', '1'], colunm: ['1', '1']}
   ];
 
-  selected: boolean;
   selectedMatrix: MatrixModel;
-  // itemArr: any[] = [];
-  layoutCurrentNo='1 x 1';
+  layoutCurrentNo = '1 x 1';
+  isSidebarActivated = true;
+  study_ID: string;
+  instance_IDs: string[];
 
-  constructor() {
-    cornerstoneWADOImageLoader.webWorkerManager.initialize({
-      webWorkerPath: '/assets/cornerstone/webworkers/cornerstoneWADOImageLoaderWebWorker.js',
-      taskConfiguration: {
-        'decodeTask': {
-          codecsPath: 'cornerstoneWADOImageLoaderCodecs.js'
-        }
-      }
-    });
+
+  constructor(private viewerService: ViewerService, private route: ActivatedRoute) {
+    // cornerstoneWADOImageLoader.webWorkerManager.initialize({
+    //   webWorkerPath: '/assets/cornerstone/webworkers/cornerstoneWADOImageLoaderWebWorker.js',
+    //   taskConfiguration: {
+    //     'decodeTask': {
+    //       codecsPath: 'cornerstoneWADOImageLoaderCodecs.js'
+    //     }
+    //   }
+    // });
 
     this.selectedMatrix = {name: '1 x 1', row: ['1'], colunm: ['1']};
-    // this.setItemsArr();
+
   }
 
   ngOnInit() {
+    // Get patientID from url for loading study list
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.study_ID = params.get('study_ID');
+      this.getInstances_IDs(this.study_ID);
+
+    });
   }
 
   ngAfterViewInit() {
@@ -79,12 +83,14 @@ export class ViewerComponent implements OnInit, AfterViewInit {
   }
 
   changeLayout(matrix) {
-    this.layoutCurrentNo=matrix.name;
+    this.layoutCurrentNo = matrix.name;
   }
 
-  // setItemsArr(){
-  //   for (let i = 1; i <= this.selectedMatrix.row.length * this.selectedMatrix.colunm.length; i++) {
-  //     this.itemArr.push(i);
-  //   }
-  // }
+  async getInstances_IDs(study_ID) {
+    // let study= await this.viewerService.getStudyByID(this.study_ID);
+    let series_IDs = await this.viewerService.getSeriesIDList(this.study_ID);
+    this.instance_IDs = await this.viewerService.getInstanceIDList(series_IDs[0]);
+    // console.log(this.instance_IDs);
+  }
+
 }
