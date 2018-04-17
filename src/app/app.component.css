@@ -1,0 +1,9 @@
+.flex-container{
+  display: flex;
+  justify-content: flex-end;
+}
+.flex-container > div{
+  position: absolute;
+  margin-top: 20px;
+  margin-right: 20px;
+}
