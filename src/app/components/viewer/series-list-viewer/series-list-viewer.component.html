@@ -1,0 +1,6 @@
+<div *ngFor="let series of seriesList">
+  <div [appSeriesDraggable]="{data: series.ID}" class="item-series">
+    <img src="{{imageOrthancUrl}}{{series.Instances[0]}}/preview">
+  </div>
+</div>
+

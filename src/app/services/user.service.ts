@@ -7,7 +7,7 @@ import {TOKEN_NAME, ROLE_NAME, USER_ID} from '../services/local-storage.service'
 import { LocalStorageService } from "../services/local-storage.service";
 
 import { error } from "util";
-import { environment } from "../../environments/environment.prod";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class UserService {
@@ -18,12 +18,12 @@ export class UserService {
     private http: HttpClient,
     private localStorageService: LocalStorageService
   ) {
-    this.headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      'Accept': "application/json",
-      "Access-Control-Allow-Headers": "Content-Type",
-      // "Access-Control-Allow-Origin": "*"
-    });
+    // this.headers = new HttpHeaders({
+    //   "Content-Type": "application/json",
+    //   'Accept': "application/json",
+    //   "Access-Control-Allow-Headers": "Content-Type",
+    //   // "Access-Control-Allow-Origin": "*"
+    // });
     this.apiNodeUrl = environment.apiUrlNode;
   }
 
@@ -40,7 +40,8 @@ export class UserService {
         {
           username: user.username,
           password: user.password
-        },{headers:this.headers}
+        }
+        // ,{headers:this.headers}
       )
       .map(res => this.processResponse(res, this.localStorageService))
       .catch(error => this.handleError(error));

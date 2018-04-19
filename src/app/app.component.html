@@ -1,5 +1,5 @@
   <div class="flex-container">
-    <div *ngIf="userId" class="log-out" (click)="onLogout()">
+    <div *ngIf="login$|async" class="log-out" (click)="onLogout()">
       <button type="button" class="btn btn-secondary btn-sm">
         Log out
       </button>

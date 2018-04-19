@@ -1,4 +1,4 @@
-import {Directive, ElementRef, HostListener, EventEmitter, OnInit, Input, Output} from '@angular/core';
+import {Directive, ElementRef, HostListener, EventEmitter, OnInit, Input, Output, OnChanges} from '@angular/core';
 
 import Hammer from 'hammerjs';
 import * as dicomParser from 'dicom-parser';
@@ -15,16 +15,17 @@ cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
   selector: '[appCornerstone]',
 })
 
-export class CornerstoneDirective implements OnInit {
-
+export class CornerstoneDirective implements OnInit, OnChanges {
   element: any;
   currentIndex = 0;
-
   imageList = [];
   imageListId = [];
   headers: Array<string> = [];
 
   @Output() headersUpdated: EventEmitter<Array<String>> = new EventEmitter();
+  @Input() btnArr: ButtonModel[];
+
+  // @Input() selectedBtn:string;
 
   @Input('image')
   set image(imageData: any) {
@@ -33,27 +34,26 @@ export class CornerstoneDirective implements OnInit {
         this.imageList.push(imageData);
         this.imageListId.push(imageData.imageId);
       }
-
       if (imageData.imageId) {
         this.displayImage(imageData, this.element);
+        // console.log(imageData)
       }
-      // console.log(this.imageList);
     }
   }
 
-  @Input() btnArr: ButtonModel[];
-
   constructor(public elementRef: ElementRef) {
     this.elementRef = elementRef;
+    //
   }
 
   ngOnInit() {
     // Retrieve the DOM element itself
     this.element = this.elementRef.nativeElement;
-
     // Enable the element with Cornerstone
     cornerstone.enable(this.element);
+  }
 
+  ngOnChanges() {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -61,10 +61,9 @@ export class CornerstoneDirective implements OnInit {
     cornerstone.resize(this.element, true);
   }
 
-  @HostListener('mouseover', ['$event'])
-  onHover(event) {
+  @HostListener('mouseenter', ['$event'])
+  activateFunc() {
     event.preventDefault();
-    // this.zoomFunc(this.zoomDir);
     let activatedBtn;
     for (let btn of this.btnArr) {
       if (btn.value) {
@@ -112,22 +111,46 @@ export class CornerstoneDirective implements OnInit {
         this.freehandFunc();
         break;
       }
-      case 'magnify':{
+      case 'magnify': {
         this.magnifyFunc();
         break;
       }
+      case 'rotate':{
+        this.rotateFunc();
+        break;
+      }
+
 
     }
-
   }
 
+  // Save image,
+  @HostListener('click', ['$event'])
+
+  activateFunc1() {
+    event.preventDefault();
+    let activatedBtn;
+    for (let btn of this.btnArr) {
+      if (btn.value) {
+        activatedBtn = btn.name;
+      }
+    }
+    switch (activatedBtn) {
+      case 'saveAs': {
+        this.saveAsFunc();
+        break;
+      }
+      case 'clearAll': {
+        this.clearAllToolsFunc();
+        break;
+      }
+    }
+  }
 
   @HostListener('mousewheel', ['$event'])
   onMouseWheel(event) {
     event.preventDefault();
-
     const delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
-
     if (delta > 0) {
       this.currentIndex++;
       if (this.currentIndex > this.imageList.length) {
@@ -139,7 +162,6 @@ export class CornerstoneDirective implements OnInit {
         this.currentIndex = 0;
       }
     }
-
     /** set the image to the current scroll index */
     this.headers['currentImage'] = this.currentIndex;
     this.image = this.imageList[this.currentIndex];
@@ -150,36 +172,28 @@ export class CornerstoneDirective implements OnInit {
       currentImageIdIndex: 0,
       imageIds: this.imageListId
     };
-
     this.headers['currentImage'] = stack.currentImageIdIndex;
-
     /** get metadata using DicomParser */
     this.getImageHeaders(image);
-
     cornerstone.displayImage(element, image);
-
     // enable inputs
     cornerstoneTools.mouseInput.enable(element);
     cornerstoneTools.mouseWheelInput.enable(element);
     // cornerstoneTools.touchInput.enable(element);
-
     // Set the stack as tool state
     cornerstoneTools.addStackStateManager(element, ['stack']);
     cornerstoneTools.addToolState(element, 'stack', stack);
-
     // mouse
     cornerstoneTools.wwwc.activate(element, 1); // ww/wc is the default tool for left mouse button
     cornerstoneTools.pan.activate(element, 2); // pan is the default tool for middle mouse button
     cornerstoneTools.zoom.activate(element, 4); // zoom is the default tool for right mouse button
-     cornerstoneTools.probe.enable(element);
+    cornerstoneTools.probe.enable(element);
     cornerstoneTools.length.enable(element);
     cornerstoneTools.ellipticalRoi.enable(element);
     cornerstoneTools.rectangleRoi.enable(element);
     cornerstoneTools.angle.enable(element);
     cornerstoneTools.highlight.enable(element);
     cornerstoneTools.magnify.enable(element);
-
-
     // touch / gesture
     // cornerstoneTools.zoomTouchPinch.activate(element); // - Pinch
     // cornerstoneTools.panMultiTouch.activate(element); // - Multi (x2)
@@ -200,6 +214,8 @@ export class CornerstoneDirective implements OnInit {
     cornerstoneTools.highlight.deactivate(this.element, 1);
     cornerstoneTools.freehand.deactivate(this.element, 1);
     cornerstoneTools.magnify.disable(this.element);
+    cornerstoneTools.rotate.deactivate(this.element, 1);
+
   }
 
   panFunc() {
@@ -251,23 +267,52 @@ export class CornerstoneDirective implements OnInit {
     this.disableAllTools();
     cornerstoneTools.freehand.activate(this.element, 1);
   }
-  magnifyFunc(){
+
+  magnifyFunc() {
     this.disableAllTools();
-    var config = {
-      magnifySize: 100,
-      magnificationLevel: 100
-    };
+    cornerstoneTools.mouseInput.enable(this.element);
+        cornerstoneTools.magnify.enable(this.element);
+    var config = cornerstoneTools.magnify.getConfiguration();
+    config.magnifySize = 230;
+    config.magnificationLevel=2;
+    var magnify = document.querySelector('.magnifyTool');
+    magnify.setAttribute('width', config.magnifySize);
+    magnify.setAttribute('height', config.magnifySize);
     cornerstoneTools.magnify.setConfiguration(config);
-    cornerstoneTools.magnify.activate(this.element,1);
-    // cornerstoneTools.magnifyTouchDrag.activate(this.element);
+    cornerstoneTools.magnify.activate(this.element, 1);
+  }
+
+  rotateFunc() {
+    this.disableAllTools();
+    cornerstoneTools.rotate.activate(this.element,1);
+  }
+
+
+
+  saveAsFunc() {
+    this.disableAllTools();
+    cornerstoneTools.saveAs(this.element, 'image');
+  }
+
+  clearAllToolsFunc() {
+    // var toolStateManager = cornerstoneTools.getElementToolStateManager(this.element);
+    // toolStateManager.clear(this.element);
+    this.disableAllTools();
+    cornerstoneTools.clearToolState(this.element, 'probe');
+    cornerstoneTools.clearToolState(this.element, 'length');
+    cornerstoneTools.clearToolState(this.element, 'ellipticalRoi');
+    cornerstoneTools.clearToolState(this.element, 'angle');
+    cornerstoneTools.clearToolState(this.element, 'highlight');
+    cornerstoneTools.clearToolState(this.element, 'freehand');
+    cornerstone.updateImage(this.element);
 
   }
+
 
   getImageHeaders(image) {
     try {
       /** Parse the byte array to get a DataSet object that has the parsed contents */
       var dataSet = dicomParser.parseDicom(image.data.byteArray/*, options */);
-
       /** Access a string element */
       this.headers['allImages'] = this.imageList.length;
       this.headers['currentImage'] = this.currentIndex;
@@ -278,9 +323,7 @@ export class CornerstoneDirective implements OnInit {
       this.headers['studyDate'] = dataSet.string('x00080020');
       this.headers['sliceThickness'] = dataSet.string('x00180040');
       this.headers['spacingSlices'] = dataSet.string('x00180088');
-
       this.headersUpdated.emit(this.headers);
-
     } catch (ex) {
       console.log('Error parsing byte stream', ex);
     }

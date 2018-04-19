@@ -5,6 +5,11 @@ import { Router, RouterStateSnapshot } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
 import { DataService } from './data.service';
 import { TOKEN_NAME, USER_NAME } from "../services/local-storage.service";
+import {Store} from '@ngrx/store';
+
+interface AppState{
+  login:boolean;
+}
 
 @Injectable()
 export class AuthService {
@@ -12,7 +17,8 @@ export class AuthService {
               private jwtHelperService: JwtHelperService,
               private router: Router,
               private localStorageService: LocalStorageService,
-              private dataService: DataService) {
+              private dataService: DataService,
+              private store:Store<AppState>) {
 
   }
 
@@ -33,9 +39,11 @@ export class AuthService {
 
   isAuthenticated(state): boolean {
     if (this.hasTokenValid()) {
+      this.store.dispatch({type:'LOGIN'});
       return true;
     }  else {
       this.progressWhenLoginFail(state);
+      this.store.dispatch({type:'LOGOUT'});
       return false;
     }
   }

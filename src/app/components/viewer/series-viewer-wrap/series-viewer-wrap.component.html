@@ -1,0 +1,6 @@
+<div class="content" appSeriesDropTarget (appDrop)="onDrop($event)">
+  <div class="content-item" *ngIf="series_ID$">
+    <app-series-viewer [btnArr]="btnArr" [series_ID]="series_ID$" [selectedBtn]="selectedBtn"></app-series-viewer>
+  </div>
+</div>
+

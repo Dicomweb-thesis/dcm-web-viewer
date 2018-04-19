@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrlNode:'http://localhost:4000/api'
-
+  apiUrlNode:'http://localhost:4000',
+  orthancUrl:'http://localhost:8042'
 };

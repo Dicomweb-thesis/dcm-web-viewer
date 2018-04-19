@@ -7,6 +7,8 @@ import {CommonModule} from '@angular/common';
 import {Routes, RouterModule} from '@angular/router';
 import {MaterialModule} from './modules/material.module';
 import {InterceptorModule} from './modules/interceptor.module';
+import {StoreModule} from '@ngrx/store';
+import {loginReducer} from './reducers/login.reducer';
 
 // Services
 import {AuthGuard} from './services/auth-guard.service';
@@ -21,27 +23,31 @@ import {CornerstoneDirective} from './directives/cornerstone.directive';
 
 // Components
 import {AppComponent} from './app.component';
-import {PatientListComponent} from './patient-list/patient-list.component';
-import {StudyListComponent} from './study-list/study-list.component';
-import {ViewerComponent} from './viewer/viewer.component';
-import {SeriesListViewerComponent} from './viewer/series-list-viewer/series-list-viewer.component';
-import {SeriesViewerComponent} from './viewer/series-viewer/series-viewer.component';
-import {LoginComponent} from './users/login/login.component';
-import {SeriesListComponent} from './series-list/series-list.component';
+import {PatientListComponent} from './components/patient-list/patient-list.component';
+import {StudyListComponent} from './components/study-list/study-list.component';
+import {ViewerComponent} from './components/viewer/viewer.component';
+import {SeriesListViewerComponent} from './components/viewer/series-list-viewer/series-list-viewer.component';
+import {SeriesViewerComponent} from './components/viewer/series-viewer-wrap/series-viewer/series-viewer.component';
+import {LoginComponent} from './components/login/login.component';
+import {SeriesListComponent} from './components/series-list/series-list.component';
+import {DraggableDirective} from './directives/draggable.directive';
+import {DropTargetDirective} from './directives/drop-target.directive';
+import {DragService} from './services/drag.service';
+import { SeriesViewerWrapComponent } from './components/viewer/series-viewer-wrap/series-viewer-wrap.component';
 
 
 //
 const routesConfig: Routes = [
-  {path: '', component: PatientListComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Normal}},
-  {path: 'patients', component: PatientListComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Normal}},
-  {path: 'patients/:id/studies', component: StudyListComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Normal}},
+  {path: '', component: PatientListComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Admin}},
+  {path: 'patients', component: PatientListComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Admin}},
+  {path: 'patients/:id/studies', component: StudyListComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Admin}},
   {
     path: 'patients/:patientID/studies/:studyID/series',
     component: SeriesListComponent,
     canActivate: [AuthGuard],
-    data: {role: RoleEnum.Normal}
+    data: {role: RoleEnum.Admin}
   },
-  {path: 'viewer/:study_ID/:series_ID', component: ViewerComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Normal}},
+  {path: 'viewer/:study_ID/:series_ID', component: ViewerComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Admin}},
   {path: 'login', component: LoginComponent}
 
 ];
@@ -56,7 +62,10 @@ const routesConfig: Routes = [
     SeriesListComponent,
     SeriesViewerComponent,
     SeriesListViewerComponent,
-    LoginComponent
+    LoginComponent,
+    DraggableDirective,
+    DropTargetDirective,
+    SeriesViewerWrapComponent
   ],
   imports: [
     BrowserModule,
@@ -67,9 +76,9 @@ const routesConfig: Routes = [
     MaterialModule,
     HttpClientModule,
     InterceptorModule,
-
+    StoreModule.forRoot({login: loginReducer})
   ],
-  providers: [AuthGuard, AuthService, JwtHelperService,LocalStorageService,DataService],
+  providers: [AuthGuard, AuthService, JwtHelperService, LocalStorageService, DataService, DragService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
