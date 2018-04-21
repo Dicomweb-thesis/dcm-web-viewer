@@ -1,0 +1,21 @@
+.jumbotron {
+  background-color: #151a1f;
+  font-size: 20px;
+  height: 65px;
+  align-content: center;
+  vertical-align: center;
+  padding-top: 28px;
+  margin-bottom: 3px;
+}
+
+.text-sm-bottom {
+  font-size: 15px;
+  vertical-align: bottom;
+  padding-top: 10px;
+}
+
+.btn-sm:hover{
+  background-color: rgb(76, 77, 78);
+}
+
+

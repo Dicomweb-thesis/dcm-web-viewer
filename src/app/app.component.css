@@ -1,0 +1,17 @@
+.flex-container{
+  display: flex;
+  justify-content: flex-end;
+}
+.flex-container > div{
+  position: absolute;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+[_nghost-c3] tr.ng2-smart-row.selected[_ngcontent-c3] {
+  background: #2c363f;
+}
+
+[_nghost-c3] tr.ng2-smart-row:hover[_ngcontent-c3] {
+  background: #2c363f;
+}

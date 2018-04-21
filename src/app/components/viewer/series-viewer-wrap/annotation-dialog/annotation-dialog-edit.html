@@ -1,0 +1,26 @@
+<!--<dialog class="relabelDialog" oncontextmenu="return false">-->
+  <!--<h5>Edit your annotation</h5>-->
+  <!--<div class="annotationTextInputOptions">-->
+    <!--<label for="annotationTextInput">New label</label>-->
+    <!--<input name="annotationTextInput" class="annotationTextInput" type="text"/>-->
+  <!--</div>-->
+  <!--<div>-->
+    <!--<a class="relabelRemove btn btn-sm btn-secondary">Remove marker</a>-->
+    <!--<a class="relabelConfirm btn btn-sm btn-primary">OK</a>-->
+  <!--</div>-->
+<!--</dialog>-->
+
+<h1 mat-dialog-title>Ghi chú</h1>
+<div mat-dialog-content>
+  <p>Chỉnh sửa:</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.animal">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <!--<button mat-button (click)="onNoClick()">No Thanks</button>-->
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Loại bỏ nhãn</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Xong</button>
+</div>
+
+

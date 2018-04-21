@@ -1,0 +1,20 @@
+<!--<dialog class="annotationDialog">-->
+  <!--<h5>Enter your annotation</h5>-->
+  <!--<div class="annotationTextInputOptions">-->
+    <!--<label for="annotationTextInput">New label</label>-->
+    <!--<input name="annotationTextInput" class="annotationTextInput" type="text"/>-->
+  <!--</div>-->
+  <!--<a class="annotationDialogConfirm btn btn-sm btn-primary">OK</a>-->
+<!--</dialog>-->
+
+<h1 mat-dialog-title>Ghi chú</h1>
+<div mat-dialog-content>
+  <p>Nhập nội dung:</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <!--<button mat-button (click)="onNoClick()">No Thanks</button>-->
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Xong</button>
+</div>

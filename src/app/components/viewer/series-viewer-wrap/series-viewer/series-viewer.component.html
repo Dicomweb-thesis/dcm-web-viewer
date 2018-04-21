@@ -1,0 +1,31 @@
+
+<!--<div class="btn btn-primary" (click)="openDialog()">Test</div>-->
+<div id="dicomWrapper" oncontextmenu="return false" unselectable='on' onselectstart='return false;'
+     onmousedown='return false;'>
+
+  <div appCornerstone [image]="imageData"  [btnArr]="btnArr" (headersUpdated)="updateHeaders($event)" id="dicomImage"
+       style="object-fit: cover;">
+
+    <div *ngIf='imageData'>
+      <!-- top left -->
+      <p class="headers" style="top: 5px; left: 10px;">{{imageHeaders['patientName']}}</p>
+      <p class="headers" style="top: 25px; left: 10px;">{{imageHeaders['patientAge']}}</p>
+      <!-- <p class="headers" style="top: 35px; left: 10px;">{{imageHeaders['patientSex']}}</p> -->
+
+      <!-- top right -->
+      <p class="headers" style="top: 5px; right: 10px;">{{imageHeaders['institution​Name']}}</p>
+      <p class="headers" style="top: 25px; right: 10px;">{{imageHeaders['studyDate']}}</p>
+
+      <!-- bottom left -->
+      <p class="headers" style="bottom: 25px; left: 10px;">Độ dày: {{imageHeaders['sliceThickness']}}</p>
+      <p class="headers" style="bottom: 5px; left: 10px;">Spacing: {{imageHeaders['spacingSlices']}}</p>
+
+      <!-- bottom right -->
+      <p class="headers" style="bottom: 5px; right: 10px;">{{imageHeaders['currentImage']}} /
+        {{imageHeaders['allImages']}}</p>
+    </div>
+
+  </div>
+</div>
+<!--===============================================================-->
+
