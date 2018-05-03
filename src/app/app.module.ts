@@ -48,8 +48,8 @@ const routesConfig: Routes = [
     canActivate: [AuthGuard],
     data: {role: RoleEnum.Admin}
   },
-  {path: 'viewer/:study_ID', component: ViewerComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Admin}},
-  {path: 'viewer/:study_ID/:series_ID', component: ViewerComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Admin}},
+  {path: 'viewer/:patientID/:study_ID', component: ViewerComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Admin}},
+  {path: 'viewer/:patientID/:study_ID/:series_ID', component: ViewerComponent, canActivate: [AuthGuard], data: {role: RoleEnum.Admin}},
   {path: 'login', component: LoginComponent}
 
 ];

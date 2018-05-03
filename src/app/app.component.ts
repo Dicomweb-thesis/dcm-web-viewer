@@ -7,20 +7,24 @@ import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 
-interface AppState{
-  login:boolean;
+interface AppState {
+  login: boolean;
 }
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers:[DataService,UserService]
+  providers: [DataService, UserService]
 })
 export class AppComponent implements OnInit {
   userId: string;
-  login$:Observable<boolean>
-  constructor(private dataService: DataService, private userService: UserService,private router:Router,private store:Store<AppState>) {
+  login$: Observable<boolean>;
+
+  constructor(private dataService: DataService,
+              private userService: UserService,
+              private router: Router,
+              private store: Store<AppState>) {
     cornerstoneWADOImageLoader.webWorkerManager.initialize({
       webWorkerPath: '/assets/cornerstone/webworkers/cornerstoneWADOImageLoaderWebWorker.js',
       taskConfiguration: {
@@ -30,7 +34,7 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.login$=this.store.select('login')
+    this.login$ = this.store.select('login');
 
   }
 
@@ -42,13 +46,12 @@ export class AppComponent implements OnInit {
 
   onLogout() {
     let log = confirm('Are you sure want to log out?');
-    if(log){
+    if (log) {
       this.userService.tryLogout();
-      this.store.dispatch({type:'LOGOUT'});
-      this.router.navigate(["/login"]);
+      this.store.dispatch({type: 'LOGOUT'});
+      this.router.navigate(['/login']);
     }
   }
-
 
 
 }

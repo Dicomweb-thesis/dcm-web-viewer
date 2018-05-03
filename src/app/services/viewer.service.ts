@@ -17,8 +17,9 @@ export class ViewerService {
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      // 'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Headers': 'Accept, Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
+
+    'Access-Control-Allow-Origin': '*'
     });
 
     this.apiUrl = environment.orthancUrl;

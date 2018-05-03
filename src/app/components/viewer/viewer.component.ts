@@ -21,9 +21,14 @@ import {SeriesViewerWrapComponent} from './series-viewer-wrap/series-viewer-wrap
 })
 export class ViewerComponent implements OnInit, AfterViewInit {
   @ViewChild(SeriesViewerWrapComponent) private seriesWrapChild: SeriesViewerWrapComponent;
-  // set appCornerstone(directive: CornerstoneDirective) {
-  //   directive.clearAllFunc();
-  // }
+
+  errorMessage: string;
+  selectedMatrix: MatrixModel;
+  layoutCurrentNo = '1 x 1';
+  isSidebarActivated = true;
+  study_ID: string;
+  patientID:string;
+  selectedBtn: string;
 
   btnArr: ButtonModel[] = [
     {name: 'pan', value: false},
@@ -54,20 +59,11 @@ export class ViewerComponent implements OnInit, AfterViewInit {
 
   ];
 
-  errorMessage: string;
-  selectedMatrix: MatrixModel;
-  layoutCurrentNo = '1 x 1';
-  isSidebarActivated = true;
-  study_ID: string;
-  selectedBtn: string;
-
-  // series_IDs: Array<string>;
-
   constructor(private viewerService: ViewerService, private seriesListService: SeriesListService, private route: ActivatedRoute) {
     this.selectedMatrix = {name: '1 x 1', row: ['1'], colunm: ['1']};
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.study_ID = params.get('study_ID');
-
+      this.patientID=params.get('patientID');
     });
     this.selectedBtn = 'pan';
   }

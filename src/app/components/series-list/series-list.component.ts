@@ -86,7 +86,7 @@ export class SeriesListComponent implements OnInit {
     this.selectedSeriesID = event.data.ID;
     this.countClick++;
     if (this.countClick === 2) {
-      this.router.navigateByUrl(`/viewer/${this.study_ID}/${this.selectedSeriesID}`);
+      this.router.navigateByUrl(`/viewer/${this.patientID}/${this.study_ID}/${this.selectedSeriesID}`);
     }
     this.timeout();
   }

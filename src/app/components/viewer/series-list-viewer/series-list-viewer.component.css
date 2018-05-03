@@ -11,6 +11,12 @@ img{
   margin-top: 15px;
   margin-bottom: 15px;
   /*border:1px solid #1E9DCB ;*/
-
+  cursor: move;
 }
 
+.quantityInstances{
+  /*position: absolute;*/
+  font-size: 10px;
+  float: right;
+  margin-bottom: 5px;
+}

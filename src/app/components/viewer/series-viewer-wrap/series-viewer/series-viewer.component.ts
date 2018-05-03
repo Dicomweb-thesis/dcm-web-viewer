@@ -17,11 +17,11 @@ import {MatDialog} from '@angular/material';
 export class SeriesViewerComponent implements OnInit, OnChanges, AfterViewInit{
 
   imageData: any;
-  // imagePath: string = window.location.origin + '/assets/dicom/';
   private instanceApiUrl = `${environment.orthancUrl}/instances`;
   imageHeaders: Array<string>;
-  instance_IDs: Array<string>;
   errorMessage: string;
+  patientAge:string;
+  studyDate:string;
 
   @Input() btnArr: ButtonModel[];
   @Input() series_ID: string;
@@ -44,6 +44,8 @@ export class SeriesViewerComponent implements OnInit, OnChanges, AfterViewInit{
 
   updateHeaders(headerData: Array<string>) {
     this.imageHeaders = headerData;
+    this.patientAge=this.imageHeaders['patientAge'].substring(1,this.imageHeaders['patientAge'].length-1)+' tuổi';
+    this.studyDate=this.imageHeaders['studyDate'].substr(0,4)+'-'+this.imageHeaders['studyDate'].substr(4,2)+'-'+this.imageHeaders['studyDate'].substr(6,2);
   }
 
   async getImageData(series_ID) {
@@ -65,10 +67,6 @@ export class SeriesViewerComponent implements OnInit, OnChanges, AfterViewInit{
 
   disableAllTools(){
     this.corDir.disableAllTools();
-  }
-
-  onClick(){
-
   }
 
 

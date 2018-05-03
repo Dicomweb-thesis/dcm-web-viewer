@@ -7,7 +7,6 @@ import * as cornerstone from 'cornerstone-core/dist/cornerstone.js';
 import * as cornerstoneMath from 'cornerstone-math/dist/cornerstoneMath.js';
 import * as cornerstoneTools from 'cornerstone-tools/dist/cornerstoneTools.js';
 import {ButtonModel} from '../models/button.model';
-import {element} from 'protractor';
 import {AnnotationDialogComponent} from '../components/viewer/series-viewer-wrap/annotation-dialog/annotation-dialog.component';
 
 cornerstoneTools.external.Hammer = Hammer;
@@ -213,7 +212,6 @@ export class CornerstoneDirective implements OnInit, OnChanges {
     // cornerstoneTools.panMultiTouch.activate(element); // - Multi (x2)
     // cornerstoneTools.stackScrollTouchDrag.activate(element); // - Multi (x2) Drag
 
-
   }
 
   disableAllTools() {
@@ -304,15 +302,6 @@ export class CornerstoneDirective implements OnInit, OnChanges {
 
   annotationFunc() {
     this.disableAllTools();
-    // var config = {
-    //   getTextCallback: this.openDialog,
-    //   changTextCallback: this.changeTextCallback,
-    //   drawHandles: false,
-    //   drawHandlesOnOver: true,
-    //   arrowFirst: true
-    // };
-    // cornerstoneTools.arrowAnnotate.setConfiguration(config);
-
     cornerstoneTools.arrowAnnotate.activate(this.element, 1);
   }
 
@@ -327,8 +316,6 @@ export class CornerstoneDirective implements OnInit, OnChanges {
   }
 
   clearAllToolsFunc() {
-    // var toolStateManager = cornerstoneTools.getElementToolStateManager(this.element);
-    // toolStateManager.clear(this.element);
     this.disableAllTools();
     cornerstoneTools.clearToolState(this.element, 'probe');
     cornerstoneTools.clearToolState(this.element, 'length');
@@ -352,15 +339,16 @@ export class CornerstoneDirective implements OnInit, OnChanges {
       this.headers['patientSex'] = dataSet.string('x00100040');
       this.headers['institutionName'] = dataSet.string('x00080080');
       this.headers['studyDate'] = dataSet.string('x00080020');
-      this.headers['sliceThickness'] = dataSet.string('x00180040');
+      this.headers['sliceThickness'] = dataSet.floatString('x00180050');
       this.headers['spacingSlices'] = dataSet.string('x00180088');
+      this.headers['imageSize'] = dataSet.uint16('x00280010').toString() + ' x ' + dataSet.uint16('x00280011').toString();
       this.headersUpdated.emit(this.headers);
     } catch (ex) {
       console.log('Error parsing byte stream', ex);
     }
   }
 
-//  Open dialog====================================================
+//  Open dialog ====================================================
   openDialog(doneChangingTextCallback) {
     let notes: string;
 

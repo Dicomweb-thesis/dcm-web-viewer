@@ -12,7 +12,9 @@ button{
 }
 
 .nav-link.series{
-  margin-top: 5px;
+  margin: 0px 15px 0px 5px;
+  font-size: 20px;
+  color:orange;
 }
 
 i{
@@ -34,7 +36,7 @@ i{
 
 mat-grid-tile {
   /*background: lightblue;*/
-  border: 1px dotted #ff3333;
+  border: 0.1px dotted #ff3333;
 
 }
 
@@ -42,11 +44,19 @@ mat-grid-tile {
   height: 90vh;
 }
 
+.main-content{
+  width:100%;
+  height:90vh;
+}
 .item-image {
   width: 100%;
-  height: 90vh;
+  height: 100%;
   /*border: 1px dotted #ff3333;*/
 
 }
-
+.vl {
+  border-left: 4px dotted lavender;
+  height: 40px;
+  margin: 5px 10px 5px 10px;
+}
 

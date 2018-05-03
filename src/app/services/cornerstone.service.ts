@@ -17,9 +17,9 @@ export class CornerstoneService {
       beforeSend: function (xhr) {
         // Add custom headers here (e.g. auth tokens)
         xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-        xhr.setRequestHeader('Content-Type', 'application/json,application/dicom');
-        xhr.setRequestHeader('Accept', 'application/json,application/dicom');
-        xhr.setRequestHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.setRequestHeader('Access-Control-Allow-Headers', 'Accept, Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
       }
     });

@@ -4,16 +4,24 @@
       <strong>Xin lỗi!</strong> Lỗi trong khi kết nối đến server!
     </div>
   </div>
+  <!--<div class="loading text-center">-->
+    <!--<h1>test</h1>-->
+    <!--<div class="test">-->
+    <!--<mat-spinner *ngIf="dataSource"></mat-spinner>-->
+    <!--</div>-->
+  <!--</div>-->
   <div class="form-group">
     <button class="btn btn-dark btn-sm" routerLink="/patients/{{patientID}}/studies">Quay lại</button>
+
     <div class="jumbotron">
       <div class="row">
+
         <div class="col-md-4">
           <div class="row">
             Danh sách series
           </div>
           <div class="row">
-            <button class="btn btn-dark btn-sm btnViewImage" routerLink="/viewer/{{study_ID}}">Xem ảnh</button>
+            <button class="btn btn-dark btn-sm btnViewImage" routerLink="/viewer/{{patientID}}/{{study_ID}}">Xem ảnh</button>
           </div>
         </div>
         <div class="col-md-4"></div>
@@ -25,6 +33,9 @@
         </div>
       </div>
     </div>
+
+
+
     <ng2-smart-table class="table table-striped" [settings]="settings" [source]="dataSource"
                      (userRowSelect)="onUserRowSelect($event)"></ng2-smart-table>
 

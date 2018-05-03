@@ -14,7 +14,7 @@ import {environment} from '../../../../environments/environment';
 export class SeriesListViewerComponent implements OnInit, OnChanges {
 
   imagePathRoot: string = window.location.origin + '/assets/png/';
-  imagePathList: Array<string> = new Array<string>();
+  // imagePathList: Array<string> = new Array<string>();
   imageOrthancUrl: string = environment.orthancUrl + '/instances/';
   series_IDs: Array<string>;
   seriesList: Array<SeriesModel>;
@@ -26,9 +26,9 @@ export class SeriesListViewerComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    for (let i = 1; i < 8; i++) {
-      this.imagePathList.push(this.imagePathRoot + i.toString() + '.png');
-    }
+    // for (let i = 1; i < 8; i++) {
+    //   this.imagePathList.push(this.imagePathRoot + i.toString() + '.png');
+    // }
     // console.log(this.imagePathList);
   }
 
